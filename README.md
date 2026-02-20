@@ -3,10 +3,10 @@
 Aplicacion movil para la gestion y consulta de ETS (Escuela Superior de Computo),
 publicada de forma incremental por fases.
 
-## Features (Phase 0)
+## Caracteristicas (Fase 0)
 
 - Arranque minimo de Flutter
-- Routing shell con pantallas placeholder
+- Shell de rutas con pantallas de marcador
 - Estructura inicial para evolucionar a Clean Architecture
 - Configuracion base de higiene para Git
 

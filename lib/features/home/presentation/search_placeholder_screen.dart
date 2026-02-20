@@ -6,9 +6,9 @@ class SearchPlaceholderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Search')),
+      appBar: AppBar(title: const Text('Buscar')),
       body: const Center(
-        child: Text('Search screen (placeholder)'),
+        child: Text('Pantalla de busqueda (marcador)'),
       ),
     );
   }

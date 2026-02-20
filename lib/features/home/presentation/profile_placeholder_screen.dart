@@ -6,9 +6,9 @@ class ProfilePlaceholderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
+      appBar: AppBar(title: const Text('Perfil')),
       body: const Center(
-        child: Text('Profile screen (placeholder)'),
+        child: Text('Pantalla de perfil (marcador)'),
       ),
     );
   }

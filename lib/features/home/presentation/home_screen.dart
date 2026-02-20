@@ -15,22 +15,22 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Phase 0 Skeleton',
+              'Esqueleto de la Fase 0',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             const Text(
-              'Navegacion minima con pantallas placeholder.',
+              'Navegacion minima con pantallas de marcador.',
             ),
             const SizedBox(height: 24),
             FilledButton(
               onPressed: () => Navigator.pushNamed(context, AppRouter.search),
-              child: const Text('Ir a Search'),
+              child: const Text('Ir a Buscar'),
             ),
             const SizedBox(height: 12),
             OutlinedButton(
               onPressed: () => Navigator.pushNamed(context, AppRouter.profile),
-              child: const Text('Ir a Profile'),
+              child: const Text('Ir a Perfil'),
             ),
           ],
         ),

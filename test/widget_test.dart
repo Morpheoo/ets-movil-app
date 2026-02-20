@@ -10,9 +10,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ets_movil_app/app/app.dart';
 
 void main() {
-  testWidgets('App boots with phase 0 home screen', (WidgetTester tester) async {
+  testWidgets('La app arranca con la pantalla de inicio de fase 0', (WidgetTester tester) async {
     await tester.pumpWidget(const EtsMovilApp());
     expect(find.text('ETS Movil'), findsOneWidget);
-    expect(find.text('Phase 0 Skeleton'), findsOneWidget);
+    expect(find.text('Esqueleto de la Fase 0'), findsOneWidget);
   });
 }
