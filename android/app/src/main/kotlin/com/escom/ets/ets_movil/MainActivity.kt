@@ -1,4 +1,4 @@
-package com.example.ets_movil_app
+package com.escom.ets.ets_movil
 
 import io.flutter.embedding.android.FlutterActivity
 

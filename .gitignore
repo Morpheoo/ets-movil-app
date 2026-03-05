@@ -43,27 +43,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-/android/.gradle/
-/android/local.properties
-/android/key.properties
-
-# IDE/editor
-.vscode/
-
-# iOS/macOS generated artifacts
-/ios/Pods/
-/ios/DerivedData/
-/ios/Flutter/Generated.xcconfig
-/ios/Flutter/flutter_export_environment.sh
-/macos/Flutter/ephemeral/
-
-# Sensitive files and signing material
-.env
-.env.*
-*.jks
-*.keystore
-*.pem
-*.key
-*.p12
-google-services.json
-firebase_options.dart

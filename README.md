@@ -1,30 +1,16 @@
-# ETS Movil App
+# ets_movil
 
-Aplicacion movil para la gestion y consulta de ETS (Escuela Superior de Computo),
-publicada de forma incremental por fases.
+A new Flutter project.
 
-## Caracteristicas (Fase 0)
+## Getting Started
 
-- Arranque minimo de Flutter
-- Shell de rutas con pantallas de marcador
-- Estructura inicial para evolucionar a Clean Architecture
-- Configuracion base de higiene para Git
+This project is a starting point for a Flutter application.
 
-## Tech Stack
+A few resources to get you started if this is your first Flutter project:
 
-- Flutter 3.x
-- Dart 3.x
-- Material 3
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-## Setup
-
-```bash
-flutter pub get
-flutter run
-```
-
-## Arquitectura (nota)
-
-En esta fase solo se publica el esqueleto. Los modulos de dominio, datos y
-funcionalidades completas se iran agregando por fases con commits pequenos y
-auditables.
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

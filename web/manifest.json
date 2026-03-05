@@ -1,6 +1,6 @@
 {
-    "name": "ets_movil_app",
-    "short_name": "ets_movil_app",
+    "name": "ets_movil",
+    "short_name": "ets_movil",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
