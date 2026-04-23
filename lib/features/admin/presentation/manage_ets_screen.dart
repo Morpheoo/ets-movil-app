@@ -142,18 +142,15 @@ class _ManageEtsScreenState extends State<ManageEtsScreen> {
                                 children: [
                                   _buildLabel('DATE'),
                                   const SizedBox(height: 8),
-                                  GestureDetector(
+                                  TextFormField(
+                                    readOnly: true,
                                     onTap: _pickDate,
-                                    child: AbsorbPointer(
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                          hintText: _formatDate(_selectedDate),
-                                          suffixIcon: const Icon(Icons.calendar_today, size: 18, color: AppColors.textSecondary),
-                                          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-                                        ),
-                                        controller: TextEditingController(text: _formatDate(_selectedDate)),
-                                      ),
+                                    decoration: InputDecoration(
+                                      hintText: _formatDate(_selectedDate),
+                                      suffixIcon: const Icon(Icons.calendar_today, size: 18, color: AppColors.textSecondary),
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
                                     ),
+                                    controller: TextEditingController(text: _formatDate(_selectedDate)),
                                   ),
                                 ],
                               ),
@@ -165,18 +162,15 @@ class _ManageEtsScreenState extends State<ManageEtsScreen> {
                                 children: [
                                   _buildLabel('TIME'),
                                   const SizedBox(height: 8),
-                                  GestureDetector(
+                                  TextFormField(
+                                    readOnly: true,
                                     onTap: _pickTime,
-                                    child: AbsorbPointer(
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                          hintText: _formatTime(_selectedTime),
-                                          suffixIcon: const Icon(Icons.access_time, size: 18, color: AppColors.textSecondary),
-                                          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-                                        ),
-                                        controller: TextEditingController(text: _formatTime(_selectedTime)),
-                                      ),
+                                    decoration: InputDecoration(
+                                      hintText: _formatTime(_selectedTime),
+                                      suffixIcon: const Icon(Icons.access_time, size: 18, color: AppColors.textSecondary),
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
                                     ),
+                                    controller: TextEditingController(text: _formatTime(_selectedTime)),
                                   ),
                                 ],
                               ),

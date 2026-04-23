@@ -73,7 +73,7 @@ class AdminDashboardScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppColors.surface,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.divider.withOpacity(0.5)),
+                  border: Border.all(color: AppColors.divider.withValues(alpha: 0.5)),
                 ),
                 child: Column(
                   children: [
@@ -173,9 +173,9 @@ class AdminDashboardScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.05),
+        color: color.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: color.withOpacity(0.15)),
+        border: Border.all(color: color.withValues(alpha: 0.15)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,8 +220,8 @@ class AdminDashboardScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
             child: LinearProgressIndicator(
               value: value == '142' ? 0.75 : 0.3,
-              backgroundColor: color.withOpacity(0.1),
-              valueColor: AlwaysStoppedAnimation<Color>(color.withOpacity(0.6)),
+              backgroundColor: color.withValues(alpha: 0.1),
+              valueColor: AlwaysStoppedAnimation<Color>(color.withValues(alpha: 0.6)),
               minHeight: 4,
             ),
           ),
@@ -257,7 +257,7 @@ class AdminDashboardScreen extends StatelessWidget {
             value: progress,
             backgroundColor: AppColors.divider,
             valueColor: AlwaysStoppedAnimation<Color>(
-              AppColors.primary.withOpacity(0.7),
+              AppColors.primary.withValues(alpha: 0.7),
             ),
             minHeight: 8,
           ),
@@ -273,7 +273,7 @@ class AdminDashboardScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.divider.withOpacity(0.4)),
+        border: Border.all(color: AppColors.divider.withValues(alpha: 0.4)),
       ),
       child: Row(
         children: [
@@ -281,7 +281,7 @@ class AdminDashboardScreen extends StatelessWidget {
             width: 38,
             height: 38,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(icon, color: AppColors.primary, size: 20),

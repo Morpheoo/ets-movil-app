@@ -1,26 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/data/local/database_helper.dart';
-import '../../data/datasources/ets_local_data_source.dart';
-import '../../data/datasources/ets_remote_data_source.dart';
-import '../../data/repositories/ets_repository_impl.dart';
 import '../../domain/entities/ets_entity.dart';
 import '../../domain/repositories/ets_repository.dart';
+import '../../../../core/notifications/notification_service.dart';
+import '../../../../core/di/injection.dart';
 
 // Providers
-final databaseHelperProvider = Provider<DatabaseHelper>((ref) => DatabaseHelper.instance);
-
-final etsRemoteDataSourceProvider = Provider<EtsRemoteDataSource>((ref) => EtsRemoteDataSourceImpl());
-
-final etsLocalDataSourceProvider = Provider<EtsLocalDataSource>((ref) {
-  final dbHelper = ref.watch(databaseHelperProvider);
-  return EtsLocalDataSourceImpl(dbHelper);
-});
-
-final etsRepositoryProvider = Provider<EtsRepository>((ref) {
-  final remote = ref.watch(etsRemoteDataSourceProvider);
-  final local = ref.watch(etsLocalDataSourceProvider);
-  return EtsRepositoryImpl(remote, local);
-});
+final etsRepositoryProvider = Provider<EtsRepository>((ref) => getIt<EtsRepository>());
 
 // Notifiers
 final etsListProvider = AsyncNotifierProvider<EtsListNotifier, List<EtsEntity>>(EtsListNotifier.new);
@@ -119,8 +104,10 @@ class SavedEtsNotifier extends AsyncNotifier<List<EtsEntity>> {
      
      if (isSaved) {
        await repository.removeSavedEts(ets.id);
+       await NotificationService().cancelReminder(ets.id);
      } else {
        await repository.saveEts(ets);
+       await NotificationService().scheduleEtsReminder(ets);
      }
      // Refresh list
      ref.invalidateSelf();

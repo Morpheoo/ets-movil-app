@@ -20,26 +20,56 @@ class DatabaseHelper {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _createDB,
+      onUpgrade: _upgradeDB,
     );
   }
 
   Future<void> _createDB(Database db, int version) async {
-    const idType = 'TEXT PRIMARY KEY';
-    const textType = 'TEXT NOT NULL';
-    const intType = 'INTEGER NOT NULL';
+    await _createSavedEts(db);
+    await _createCareers(db);
+    await _createClassrooms(db);
+  }
 
+  Future<void> _upgradeDB(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await _createCareers(db);
+      await _createClassrooms(db);
+    }
+  }
+
+  Future<void> _createSavedEts(Database db) async {
     await db.execute('''
-CREATE TABLE saved_ets (
-  id $idType,
-  subject $textType,
-  date $textType,
-  shift $textType,
-  classroom $textType,
-  professor $textType,
-  career $textType,
-  semester $intType
+CREATE TABLE IF NOT EXISTS saved_ets (
+  id TEXT PRIMARY KEY,
+  subject TEXT NOT NULL,
+  date TEXT NOT NULL,
+  shift TEXT NOT NULL,
+  classroom TEXT NOT NULL,
+  professor TEXT NOT NULL,
+  career TEXT NOT NULL,
+  semester INTEGER NOT NULL
+)
+''');
+  }
+
+  Future<void> _createCareers(Database db) async {
+    await db.execute('''
+CREATE TABLE IF NOT EXISTS careers (
+  code TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  is_active INTEGER NOT NULL DEFAULT 1
+)
+''');
+  }
+
+  Future<void> _createClassrooms(Database db) async {
+    await db.execute('''
+CREATE TABLE IF NOT EXISTS classrooms (
+  id TEXT PRIMARY KEY,
+  building TEXT NOT NULL,
+  room TEXT NOT NULL
 )
 ''');
   }

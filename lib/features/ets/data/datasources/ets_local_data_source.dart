@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import '../../../../core/data/local/database_helper.dart';
 import '../../domain/entities/ets_entity.dart';
+import 'package:injectable/injectable.dart';
 
 abstract class EtsLocalDataSource {
   Future<void> saveEts(EtsEntity ets);
@@ -8,6 +9,7 @@ abstract class EtsLocalDataSource {
   Future<void> removeSavedEts(String id);
 }
 
+@LazySingleton(as: EtsLocalDataSource)
 class EtsLocalDataSourceImpl implements EtsLocalDataSource {
   final DatabaseHelper databaseHelper;
 

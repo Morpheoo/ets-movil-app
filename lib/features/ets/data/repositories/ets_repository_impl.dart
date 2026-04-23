@@ -1,9 +1,12 @@
-
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failures.dart';
 import '../../domain/entities/ets_entity.dart';
 import '../../domain/repositories/ets_repository.dart';
 import '../datasources/ets_local_data_source.dart';
 import '../datasources/ets_remote_data_source.dart';
+import 'package:injectable/injectable.dart';
 
+@LazySingleton(as: EtsRepository)
 class EtsRepositoryImpl implements EtsRepository {
   final EtsRemoteDataSource remoteDataSource;
   final EtsLocalDataSource localDataSource;
@@ -12,33 +15,57 @@ class EtsRepositoryImpl implements EtsRepository {
 
   @override
   Future<List<EtsEntity>> getEtsList({String? career, int? semester}) async {
-    // For mock, we fetch all and filter in memory
-    final allEts = await remoteDataSource.getEtsList();
-    return allEts.where((ets) {
-      if (career != null && ets.career != career) return false;
-      if (semester != null && ets.semester != semester) return false;
-      return true;
-    }).toList();
+    try {
+      return await remoteDataSource.getEtsList(
+        career: career,
+        semester: semester,
+      );
+    } on NetworkException {
+      throw const NetworkFailure('Sin conexión a internet. Verifica tu red.');
+    } on RequestTimeoutException {
+      throw const TimeoutFailure('La solicitud tardó demasiado. Intenta de nuevo.');
+    } on ServerException catch (e) {
+      throw ServerFailure(e.message);
+    }
   }
 
   @override
   Future<List<EtsEntity>> searchEts(String query) async {
-     final allEts = await remoteDataSource.getEtsList();
-     return allEts.where((ets) => ets.matches(query)).toList();
+    try {
+      return await remoteDataSource.searchEts(query);
+    } on NetworkException {
+      throw const NetworkFailure('Sin conexión a internet. Verifica tu red.');
+    } on RequestTimeoutException {
+      throw const TimeoutFailure('La solicitud tardó demasiado. Intenta de nuevo.');
+    } on ServerException catch (e) {
+      throw ServerFailure(e.message);
+    }
   }
 
   @override
   Future<void> saveEts(EtsEntity ets) async {
-    await localDataSource.saveEts(ets);
+    try {
+      await localDataSource.saveEts(ets);
+    } on CacheException catch (e) {
+      throw CacheFailure(e.message);
+    }
   }
 
   @override
   Future<List<EtsEntity>> getSavedEts() async {
-    return await localDataSource.getSavedEts();
+    try {
+      return await localDataSource.getSavedEts();
+    } on CacheException catch (e) {
+      throw CacheFailure(e.message);
+    }
   }
 
   @override
   Future<void> removeSavedEts(String id) async {
-    await localDataSource.removeSavedEts(id);
+    try {
+      await localDataSource.removeSavedEts(id);
+    } on CacheException catch (e) {
+      throw CacheFailure(e.message);
+    }
   }
 }

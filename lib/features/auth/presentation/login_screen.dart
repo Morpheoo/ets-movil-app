@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_theme.dart';
+import '../../../core/error/failures.dart';
 import 'providers/auth_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -45,9 +46,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           context.go('/home');
         }
       } else if (next.hasError) {
+        final failure = next.error;
+        String msg = 'Error inesperado';
+        if (failure is NetworkFailure) { msg = failure.message; }
+        else if (failure is UnauthorizedFailure) { msg = failure.message; }
+        else if (failure is TimeoutFailure) { msg = failure.message; }
+        else if (failure is ServerFailure) { msg = failure.message; }
+        else if (failure is Failure) { msg = failure.message; }
+        
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error: ${next.error}'),
+            content: Text(msg),
             backgroundColor: AppColors.error,
           ),
         );
@@ -96,7 +105,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.primary.withOpacity(0.7),
+                      color: AppColors.primary.withValues(alpha: 0.7),
                       letterSpacing: 2.5,
                     ),
                   ),
@@ -182,7 +191,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 11,
-                      color: AppColors.textSecondary.withOpacity(0.6),
+                      color: AppColors.textSecondary.withValues(alpha: 0.6),
                       height: 1.5,
                     ),
                   ),

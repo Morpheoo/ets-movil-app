@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/config/app_theme.dart';
+import '../../../core/utils/ics_generator.dart';
 import '../../ets/domain/entities/ets_entity.dart';
 import '../../ets/presentation/providers/ets_provider.dart';
 
@@ -13,6 +14,18 @@ class FavoritesScreen extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: AppColors.background,
+      floatingActionButton: savedEts.maybeWhen(
+        data: (list) => list.isEmpty
+            ? null
+            : FloatingActionButton.extended(
+                onPressed: () => exportToIcs(list),
+                icon: const Icon(Icons.calendar_month_outlined),
+                label: const Text('Exportar .ics'),
+                backgroundColor: AppColors.primary,
+                foregroundColor: Colors.white,
+              ),
+        orElse: () => null,
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

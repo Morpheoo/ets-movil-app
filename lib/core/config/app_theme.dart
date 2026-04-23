@@ -102,7 +102,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: AppColors.primary, width: 2),
         ),
-        hintStyle: TextStyle(color: AppColors.textSecondary.withOpacity(0.6)),
+        hintStyle: TextStyle(color: AppColors.textSecondary.withValues(alpha: 0.6)),
         labelStyle: const TextStyle(color: AppColors.labelColor, fontSize: 12, fontWeight: FontWeight.w600, letterSpacing: 1),
       ),
       cardTheme: CardThemeData(
@@ -110,7 +110,7 @@ class AppTheme {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: AppColors.divider.withOpacity(0.5)),
+          side: BorderSide(color: AppColors.divider.withValues(alpha: 0.5)),
         ),
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       ),

@@ -1,20 +1,11 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/datasources/auth_remote_data_source.dart';
-import '../../data/repositories/auth_repository_impl.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
-
-// Data Source Provider
-final authRemoteDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {
-  return AuthRemoteDataSourceImpl();
-});
+import '../../../../core/di/injection.dart';
 
 // Repository Provider
-final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  final remoteDataSource = ref.watch(authRemoteDataSourceProvider);
-  return AuthRepositoryImpl(remoteDataSource);
-});
+final authRepositoryProvider = Provider<AuthRepository>((ref) => getIt<AuthRepository>());
 
 // Auth State Provider
 final authProvider = AsyncNotifierProvider<AuthNotifier, UserEntity?>(AuthNotifier.new);

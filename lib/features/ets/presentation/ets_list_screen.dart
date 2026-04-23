@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_theme.dart';
+import '../../../core/error/failures.dart';
+import '../../../core/utils/excel_generator.dart';
+import '../../../core/utils/pdf_generator.dart';
 import 'providers/ets_provider.dart';
 import 'widgets/ets_card.dart';
 
@@ -60,8 +63,49 @@ class _EtsListScreenState extends ConsumerState<EtsListScreen> {
   Widget build(BuildContext context) {
     final etsAsync = ref.watch(etsListProvider);
 
+    ref.listen(etsListProvider, (previous, next) {
+      if (next.hasError && !next.isLoading) {
+        final failure = next.error;
+        String msg = 'Error inesperado';
+        if (failure is NetworkFailure) { msg = failure.message; }
+        else if (failure is TimeoutFailure) { msg = failure.message; }
+        else if (failure is ServerFailure) { msg = failure.message; }
+        else if (failure is Failure) { msg = failure.message; }
+        
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(msg),
+            backgroundColor: AppColors.error,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    });
+
     return Scaffold(
       backgroundColor: AppColors.background,
+      floatingActionButton: etsAsync.hasValue && etsAsync.value!.isNotEmpty
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                FloatingActionButton(
+                  heroTag: 'btnExcel',
+                  onPressed: () => ExcelGenerator.generateAndShareEtsList(etsAsync.value!),
+                  backgroundColor: const Color(0xFF27AE60),
+                  mini: true,
+                  child: const Icon(Icons.table_view_outlined, color: Colors.white),
+                ),
+                const SizedBox(height: 12),
+                FloatingActionButton(
+                  heroTag: 'btnPdf',
+                  onPressed: () => PdfGenerator.generateAndPrintEtsList(etsAsync.value!),
+                  backgroundColor: AppColors.primary,
+                  child: const Icon(Icons.picture_as_pdf, color: Colors.white),
+                ),
+              ],
+            )
+          : null,
       body: SafeArea(
         child: Column(
           children: [
@@ -236,16 +280,23 @@ class _EtsListScreenState extends ConsumerState<EtsListScreen> {
                   );
                 },
                 loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
-                error: (err, _) => Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.error_outline, size: 48, color: AppColors.error),
-                      const SizedBox(height: 12),
-                      Text('Error: $err', style: const TextStyle(color: AppColors.error)),
-                    ],
-                  ),
-                ),
+                error: (err, _) {
+                  String msg = 'Error inesperado';
+                  if (err is Failure) msg = err.message;
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.error_outline, size: 48, color: AppColors.error),
+                        const SizedBox(height: 12),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: Text(msg, textAlign: TextAlign.center, style: const TextStyle(color: AppColors.error)),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ),
           ],

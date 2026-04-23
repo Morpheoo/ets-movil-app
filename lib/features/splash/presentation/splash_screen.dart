@@ -75,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen>
                       borderRadius: BorderRadius.circular(24),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF6D1D3A).withOpacity(0.1),
+                          color: const Color(0xFF6D1D3A).withValues(alpha: 0.1),
                           blurRadius: 20,
                           offset: const Offset(0, 8),
                         ),
@@ -106,7 +106,7 @@ class _SplashScreenState extends State<SplashScreen>
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
-                      color: const Color(0xFF6D1D3A).withOpacity(0.6),
+                      color: const Color(0xFF6D1D3A).withValues(alpha: 0.6),
                       letterSpacing: 2,
                       height: 1.4,
                     ),
@@ -133,7 +133,7 @@ class _SplashScreenState extends State<SplashScreen>
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w500,
-                      color: const Color(0xFF6D1D3A).withOpacity(0.5),
+                      color: const Color(0xFF6D1D3A).withValues(alpha: 0.5),
                       letterSpacing: 2,
                     ),
                   ),
@@ -144,7 +144,7 @@ class _SplashScreenState extends State<SplashScreen>
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w400,
-                      color: const Color(0xFF6D1D3A).withOpacity(0.4),
+                      color: const Color(0xFF6D1D3A).withValues(alpha: 0.4),
                       letterSpacing: 1.5,
                     ),
                   ),
@@ -155,7 +155,7 @@ class _SplashScreenState extends State<SplashScreen>
                       Icon(
                         Icons.settings_rounded,
                         size: 14,
-                        color: const Color(0xFF6D1D3A).withOpacity(0.5),
+                        color: const Color(0xFF6D1D3A).withValues(alpha: 0.5),
                       ),
                       const SizedBox(width: 6),
                       Text(
@@ -163,7 +163,7 @@ class _SplashScreenState extends State<SplashScreen>
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          color: const Color(0xFF6D1D3A).withOpacity(0.5),
+                          color: const Color(0xFF6D1D3A).withValues(alpha: 0.5),
                           letterSpacing: 1,
                         ),
                       ),

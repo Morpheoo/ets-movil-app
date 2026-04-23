@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/config/app_theme.dart';
 import 'admin_dashboard_screen.dart';
+import 'manage_catalogs_screen.dart';
 
 class AdminShell extends StatefulWidget {
   const AdminShell({super.key});
@@ -16,7 +17,7 @@ class _AdminShellState extends State<AdminShell> {
   final List<Widget> _screens = const [
     AdminDashboardScreen(),
     _ExamsManageScreen(),
-    _UsersPlaceholder(),
+    ManageCatalogsScreen(),
     _AdminSettingsPlaceholder(),
   ];
 
@@ -36,7 +37,7 @@ class _AdminShellState extends State<AdminShell> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.dashboard_outlined), label: 'DASH'),
             BottomNavigationBarItem(icon: Icon(Icons.event_note_outlined), label: 'EXAMS'),
-            BottomNavigationBarItem(icon: Icon(Icons.group_outlined), label: 'USERS'),
+            BottomNavigationBarItem(icon: Icon(Icons.category_outlined), label: 'CATÁLOGOS'),
             BottomNavigationBarItem(icon: Icon(Icons.settings_outlined), label: 'SETTS'),
           ],
         ),
@@ -86,17 +87,6 @@ class _ExamsManageScreen extends StatelessWidget {
   }
 }
 
-class _UsersPlaceholder extends StatelessWidget {
-  const _UsersPlaceholder();
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(title: const Text('Users')),
-      body: const Center(child: Text('User management coming soon')),
-    );
-  }
-}
 
 class _AdminSettingsPlaceholder extends StatelessWidget {
   const _AdminSettingsPlaceholder();
@@ -109,7 +99,7 @@ class _AdminSettingsPlaceholder extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Admin settings coming soon'),
+            const Text('Configuración próximamente'),
             const SizedBox(height: 24),
             OutlinedButton(
               onPressed: () => context.go('/login'),
