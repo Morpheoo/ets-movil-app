@@ -1,30 +1,53 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
-import 'package:ets_movil/main.dart';
+import 'package:ets_movil/core/config/app_theme.dart';
+import 'package:ets_movil/features/auth/domain/entities/user_entity.dart';
+import 'package:ets_movil/features/auth/domain/repositories/auth_repository.dart';
+import 'package:ets_movil/features/auth/presentation/login_screen.dart';
+import 'package:ets_movil/features/auth/presentation/providers/auth_provider.dart';
+
+class _FakeAuthRepository implements AuthRepository {
+  @override
+  Future<UserEntity> login(String email, String password) async =>
+      const UserEntity(id: '1', email: 'a@b.com', name: 'A', role: 'student');
+
+  @override
+  Future<void> logout() async {}
+
+  @override
+  Future<UserEntity?> getCurrentUser() async => null;
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('LoginScreen renderiza inputs y botón de Login', (tester) async {
+    final router = GoRouter(
+      initialLocation: '/login',
+      routes: [
+        GoRoute(path: '/login', builder: (_, __) => const LoginScreen()),
+        GoRoute(path: '/home', builder: (_, __) => const Scaffold()),
+        GoRoute(path: '/admin', builder: (_, __) => const Scaffold()),
+      ],
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          authRepositoryProvider.overrideWithValue(_FakeAuthRepository()),
+        ],
+        child: MaterialApp.router(
+          theme: AppTheme.lightTheme,
+          routerConfig: router,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('ESCOM'), findsOneWidget);
+    expect(find.text('Welcome Back'), findsOneWidget);
+    expect(find.text('Login'), findsOneWidget);
+    expect(find.byType(TextFormField), findsNWidgets(2));
   });
 }
